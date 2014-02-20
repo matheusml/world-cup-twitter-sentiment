@@ -1,3 +1,3 @@
 class Squad < ActiveRecord::Base
-	validate_presence_of :name
+	validates_presence_of :name
 end

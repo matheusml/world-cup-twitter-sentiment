@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140220005237) do
+ActiveRecord::Schema.define(version: 20140220005441) do
 
   create_table "squads", force: true do |t|
     t.string   "name"

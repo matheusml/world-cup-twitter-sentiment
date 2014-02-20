@@ -11,6 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20140220004012) do
+
+  create_table "squads", force: true do |t|
+    t.string   "name"
+    t.decimal  "positive_percentage", precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

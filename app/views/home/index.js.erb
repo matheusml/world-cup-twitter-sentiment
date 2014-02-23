@@ -1,0 +1,2 @@
+$("#squads").html("<%= escape_javascript(render :partial => 'squads', :locals => {:squads => @squads, :active_squad => @active_squad}) %>");
+$("#squad").html("<%= escape_javascript(render :partial => 'squad', :locals => {:active_squad => @active_squad}) %>");

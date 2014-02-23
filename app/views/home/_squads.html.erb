@@ -1,7 +1,9 @@
 <ul class="nav nav-list">
   <li class="nav-header">Seleções</li>
 		<% squads.each do |squad| %>
- 			<li class="<%= active_squad_class(active_squad, squad) %>"><a href="#"><%= squad.name %></a></li>
+ 			<li class="<%= active_squad_class(active_squad, squad) %>">
+ 				<%= link_to squad.name, squad_path(squad.id) %>
+ 			</li>
 		<% end %>
 	</li>
 </ul>

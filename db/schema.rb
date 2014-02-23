@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140220005441) do
+ActiveRecord::Schema.define(version: 20140223181501) do
+
+  create_table "players", force: true do |t|
+    t.string   "name"
+    t.decimal  "positive_percentage", precision: 10, scale: 0
+    t.integer  "squad_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "squads", force: true do |t|
     t.string   "name"

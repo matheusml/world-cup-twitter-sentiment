@@ -1,12 +1,4 @@
-<div class="hero-unit">
-  <h1>Tagline</h1>
-  <p>Tagline</p>
-  <p>
-    <a class="btn btn-primary btn-large">
-      Learn more
-    </a>
-  </p>
-</div>
+<%= render :partial => 'header' %>
 
 <div class="container-fluid">
   <div class="row-fluid">
@@ -19,7 +11,7 @@
 
     <div class="span10">
     	<div id="squad">
-		  	<%= render :partial => 'squad', :locals => {:active_squad => @active_squad} %>
+		  	<%= render :partial => 'squad', :locals => {:active_squad => @active_squad, :players => @players} %>
     	</div>
     </div>
   </div>

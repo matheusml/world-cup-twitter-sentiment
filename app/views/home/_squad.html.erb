@@ -1,16 +1,16 @@
 <div class="page-header">
-  <h1><%= active_squad.name %></h1>
+  <h2><%= active_squad.name %> - <%= active_squad.positive_percentage %>%</h2>
   <table class="table table-striped">
   	<tr>
   		<th>#</th>
   		<th>Nome</th>
-  		<th>% Tweets positivos</th>
+  		<th>Tweets positivos</th>
   	</tr>
   	<% @players.each do |player| %>
   	<tr>
   		<td><%= player.id %></td>
-  		<td><%= player.name %></td>
-  		<td><%= player.positive_percentage %></td>
+  		<td><%= link_to player.name %></td>
+  		<td><span class="badge"><%= player.positive_percentage %>%</span></td>
   	</tr>
   	<% end %>
   </table>

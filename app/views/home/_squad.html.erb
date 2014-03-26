@@ -1,17 +1,15 @@
 <div class="page-header">
   <h2><%= active_squad.name %> - <%= active_squad.positive_percentage %>%</h2>
-  <table class="table table-striped">
-  	<tr>
-  		<th>#</th>
-  		<th>Nome</th>
-  		<th>Tweets positivos</th>
-  	</tr>
-  	<% @players.each do |player| %>
-  	<tr>
-  		<td><%= player.id %></td>
-  		<td><%= link_to player.name %></td>
-  		<td><span class="badge"><%= player.positive_percentage %>%</span></td>
-  	</tr>
-  	<% end %>
-  </table>
+  <div id="accordion" class="accordion">
+		<% @players.each do |player| %>
+	  	<h3><%= player.name %> <span class="badge"><%= player.positive_percentage %>%</h3>
+			<div>
+				info sobre os tweets - <%= player.name %>
+			</div>
+			<% end %>
+		</div>
+	</div>
 </div>
+
+
+<script>$("#accordion").accordion();</script>

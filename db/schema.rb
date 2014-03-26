@@ -11,6 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20140323133242) do
+
+  create_table "players", force: true do |t|
+    t.string   "name"
+    t.decimal  "positive_percentage", precision: 10, scale: 0
+    t.integer  "squad_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "squads", force: true do |t|
+    t.string   "name"
+    t.decimal  "positive_percentage", precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "group"
+  end
+
+  create_table "tweets", force: true do |t|
+    t.string   "text"
+    t.boolean  "positive"
+    t.integer  "tweetable_id"
+    t.string   "tweetable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "date"
+  end
 
 end

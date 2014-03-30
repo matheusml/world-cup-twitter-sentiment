@@ -2,7 +2,7 @@
   <h2><%= active_squad.name %> - <%= active_squad.positive_percentage %>%</h2>
   <div id="accordion" class="accordion">
 		<% @players.each do |player| %>
-	  	<h3><%= player.name %> <span class="badge"><%= player.positive_percentage %>%</h3>
+	  	<h3><%= player.name %> <span class="badge <%= generate_badge_class(player.positive_percentage) %>"><%= player.positive_percentage %>%</h3>
 			<div>
 				info sobre os tweets - <%= player.name %>
 			</div>

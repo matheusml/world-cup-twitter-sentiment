@@ -4,7 +4,7 @@
 		<% @players.each do |player| %>
 	  	<h3><%= player.name %> <span class="badge <%= generate_badge_class(player.positive_percentage) %>"><%= player.positive_percentage %>%</h3>
 			<div>
-				info sobre os tweets - <%= player.name %>
+				<%= render :partial => 'tweets', :locals => { :tweets => player.tweets } %>
 			</div>
 			<% end %>
 		</div>

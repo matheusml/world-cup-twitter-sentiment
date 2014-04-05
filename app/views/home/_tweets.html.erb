@@ -1,13 +1,8 @@
 <table class="table">
-  <thead>
-    <tr>
-      <th>Tweets</th>
-    </tr>
-  </thead>
   <tbody>
   	<% tweets.each do |tweet| %>
     <tr>
-      	<td><span class="label label-success">Positive</span> <b><%= tweet.date.strftime("%d/%m/%Y as %I:%M") %></b> - <%= tweet.text %></td>
+      	<td><span class="label <%= positive_or_negative_class(tweet.positive) %>"><%= positive_or_negative_text(tweet.positive) %></span> <b><%= tweet.date.strftime("%d/%m/%Y as %I:%M") %></b> - <%= tweet.text %></td>
     </tr>
     <% end %>
   </tbody>

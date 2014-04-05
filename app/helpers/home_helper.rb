@@ -14,4 +14,13 @@ module HomeHelper
 			'badge-important'
 		end
 	end
+
+	def positive_or_negative_text(positive)
+		positive ? 'Positivo' : 'Negativo'
+	end
+
+	def positive_or_negative_class(positive)
+		positive ? 'label-success' : 'label-important'
+	end
+
 end

@@ -4,19 +4,9 @@ class HomeController < ApplicationController
 		@active_squad = params[:squad_id] ? Squad.find(params[:squad_id]) : @squads.first
 		@players = @active_squad.players
 
-		@chart = LazyHighCharts::HighChart.new('graph') do |f|
-		  f.title(:text => "Population vs GDP For 5 Big Countries [2009]")
-		  f.xAxis(:categories => ["United States", "Japan", "China", "Germany", "France"])
-		  f.series(:name => "GDP in Billions", :yAxis => 0, :data => [14119, 5068, 4985, 3339, 2656])
-		  f.series(:name => "Population in Millions", :yAxis => 1, :data => [310, 127, 1340, 81, 65])
-
-		  f.yAxis [
-		    {:title => {:text => "GDP in Billions", :margin => 70} },
-		    {:title => {:text => "Population in Millions"}, :opposite => true},
-		  ]
-
-		  f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
-		  f.chart({:defaultSeriesType=>"column"})
-		end
+		 @chart = LazyHighCharts::HighChart.new('graph') do |f|
+       f.options[:xAxis][:categories] = ['01/07', '02/07', '03/07', '04/07', '05/07']
+       f.series(:type=> 'spline',:name=> 'Tweets positivos', :data=> [30, 95, 75, 63.3, 71])
+    end
 	end
 end

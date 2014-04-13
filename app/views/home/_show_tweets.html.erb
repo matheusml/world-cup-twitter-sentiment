@@ -1,0 +1,4 @@
+<h2><%= property.name %> - <%= property.positive_percentage %>%</h2>
+<% if property.tweets.present? %>
+	<%= render :partial => 'tweets', :locals => { :tweets => property.tweets } %>
+<% end %>

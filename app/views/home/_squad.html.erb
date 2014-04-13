@@ -1,17 +1,17 @@
-<div class="page-header">
-  <h2><%= active_squad.name %> - <%= active_squad.positive_percentage %>%</h2>
-  <table class="table table-striped">
-  	<tr>
-  		<th>#</th>
-  		<th>Nome</th>
-  		<th>Tweets positivos</th>
-  	</tr>
-  	<% @players.each do |player| %>
-  	<tr>
-  		<td><%= player.id %></td>
-  		<td><%= link_to player.name %></td>
-  		<td><span class="badge"><%= player.positive_percentage %>%</span></td>
-  	</tr>
-  	<% end %>
-  </table>
+<div class="tabbable tabs-right">
+  <ul class="nav nav-tabs">
+    <% @players.each do |player| %>
+    	<li><%= link_to player.name, show_tweets_path(player.id), :remote => true %></li>
+    <% end %>	
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active">
+      <p>
+        <div id="show-tweets">
+				  <%= render :partial => 'show_tweets', :locals => { :property => active_squad } %>
+        </div>
+			</p>
+    </div>
+  </div>
 </div>

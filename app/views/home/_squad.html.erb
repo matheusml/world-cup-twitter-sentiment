@@ -1,13 +1,16 @@
 <div class="page-header">
   <h2><%= active_squad.name %> - <%= active_squad.positive_percentage %>%</h2>
+	<% if active_squad.tweets.present? %>
+		<%= render :partial => 'tweets', :locals => { :tweets => active_squad.tweets } %>
+	<% end %>
+  
   <div id="accordion" class="accordion">
 		<% @players.each do |player| %>
 	  	<h3><%= player.name %> <span class="badge <%= generate_badge_class(player.positive_percentage) %>"><%= player.positive_percentage %>%</h3>
 			<div>
 				<%= render :partial => 'tweets', :locals => { :tweets => player.tweets } %>
 			</div>
-			<% end %>
-		</div>
+		<% end %>
 	</div>
 </div>
 

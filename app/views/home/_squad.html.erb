@@ -1,18 +1,17 @@
-<div class="page-header">
-  <h2><%= active_squad.name %> - <%= active_squad.positive_percentage %>%</h2>
-	<% if active_squad.tweets.present? %>
-		<%= render :partial => 'tweets', :locals => { :tweets => active_squad.tweets } %>
-	<% end %>
-  
-  <div id="accordion" class="accordion">
-		<% @players.each do |player| %>
-	  	<h3><%= player.name %> <span class="badge <%= generate_badge_class(player.positive_percentage) %>"><%= player.positive_percentage %>%</h3>
-			<div>
-				<%= render :partial => 'tweets', :locals => { :tweets => player.tweets } %>
-			</div>
-		<% end %>
-	</div>
+<div class="tabbable tabs-right">
+  <ul class="nav nav-tabs">
+    <% @players.each do |player| %>
+    	<li><%= link_to player.name, show_tweets_path(player.id), :remote => true %></li>
+    <% end %>	
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active">
+      <p>
+        <div id="show-tweets">
+				  <%= render :partial => 'show_tweets', :locals => { :property => active_squad } %>
+        </div>
+			</p>
+    </div>
+  </div>
 </div>
-
-
-<script>$("#accordion").accordion({ active: false, collapsible: true, heightStyle: "content" });</script>

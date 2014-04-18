@@ -1,5 +1,8 @@
 <div class="tabbable tabs-right">
   <ul class="nav nav-tabs">
+    <% if @players.present? %>
+      <li class="nav-header">Jogadores</li>
+    <% end %> 
     <% @players.each do |player| %>
     	<li><%= link_to player.name, show_tweets_path(player.id), :remote => true %></li>
     <% end %>	

@@ -14,28 +14,28 @@ task :tweet_stream => [:environment] do
 	   config.auth_method        = :oauth
 	end
 
-	stream(['neymar', 'messi', 'iniesta', 'rooney', 'xavi', 'ronaldo', 'benzema', 'guardiola', 'modric'])
-	#stream(['seleção'])
+	stream(tracked_players_and_squads)
 end
 
 private
 
 def stream(track)
-	file = File.new('jogadores.txt', 'a')
-	#file = File.new('selecao.txt', 'a')
-
 	tweets = 0
 	TweetStream::Client.new.track(track, language: 'pt') do |status|
 		tweets += 1
-		puts "#{tweets}) #{status.text}"
-		file.puts "#{tweets}) #{status.text}"
-		#break if tweets == 300
-		if tweets == 500
-			file.close
-			return
-		end
+		return if tweets == 500
 	end
 
-	#sleep(3)
-	#stream(track)
+	sleep(30 * 60)
+	stream(track)
+end
+
+def tracked_players_and_squads
+	track = []
+	Player.each do |player|
+		track << player.name
+	end
+	Squad.each do |squad|
+		track << squad.name
+	end
 end

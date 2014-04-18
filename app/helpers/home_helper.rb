@@ -22,5 +22,4 @@ module HomeHelper
 	def positive_or_negative_class(positive)
 		positive ? 'label-success' : 'label-important'
 	end
-
 end

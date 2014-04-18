@@ -6,7 +6,9 @@ class HomeController < ApplicationController
 
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.options[:xAxis][:categories] = world_cup_dates
-      f.series(:type=> 'spline',:name=> '% Tweets positivos', :data=> [30, 95, 75, 63.3, 71, 72, 30, 95, 75, 63.3, 71, 72])
+      f.options[:yAxis][:min] = 0
+      f.options[:yAxis][:max] = 100
+      f.series(:type=> 'spline',:name=> '% Tweets positivos', :data=> PlayerTweets.tweets_percentage(@active_squad, world_cup_dates))
     end
 	end
 
@@ -14,7 +16,9 @@ class HomeController < ApplicationController
 		@player = Player.find params[:player_id]
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.options[:xAxis][:categories] = world_cup_dates
-      f.series(:type=> 'spline',:name=> '% Tweets positivos', :data=> [30, 95, 75, 63.3, 71])
+      f.options[:yAxis][:min] = 0
+      f.options[:yAxis][:max] = 100
+      f.series(:type=> 'spline',:name=> '% Tweets positivos', :data=> PlayerTweets.tweets_percentage(@player, world_cup_dates))
     end
 	end
 

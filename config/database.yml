@@ -6,7 +6,7 @@ development:
   password: 
 
 production:
-  adapter: mysql2
+  adapter: postgresql
   encoding: utf8
   database: world-cup-twitter-sentiment_production
   username: root

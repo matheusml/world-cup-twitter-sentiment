@@ -1,6 +1,6 @@
 class AddsFakeTweetsWithDate < ActiveRecord::Migration
   def change
-  	if Rails.env.development?
+  	#if Rails.env.development?
   		date = Date.new(2014, 6, 12)
 
 	  	player = Player.where(:name => 'Neymar').first
@@ -25,6 +25,6 @@ class AddsFakeTweetsWithDate < ActiveRecord::Migration
 	  	squad.tweets.create(:text => 'Seleção campeã do mundo!', :positive => false, :date => (date + 2.day))
 	  	squad.tweets.create(:text => 'Seleção campeã do mundo!', :positive => true, :date => (date + 2.day))
 	  	squad.tweets.create(:text => 'Seleção campeã do mundo!', :positive => true, :date => (date + 3.day))
-	  end
+	  #end
   end
 end

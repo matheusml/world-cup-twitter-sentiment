@@ -2,7 +2,7 @@
 
 class PopulatesFakePositivePercentageForDevMode < ActiveRecord::Migration
   def change
-  	if Rails.env.development?
+  	#if Rails.env.development?
 	  	squad = Squad.where(:name => 'Brasil').first
 	  	squad.update_attributes(:positive_percentage => 73)
 
@@ -32,6 +32,6 @@ class PopulatesFakePositivePercentageForDevMode < ActiveRecord::Migration
 
 	  	player = Player.where(:name => 'Hulk').first
 	  	player.update_attributes(:positive_percentage => 53)
-  	end
+  	#end
   end
 end

@@ -2,7 +2,7 @@
 
 class PopulatesFakeTweetsForDevMode < ActiveRecord::Migration
   def change
-  	if Rails.env.development?
+  	#if Rails.env.development?
 	  	player = Player.where(:name => 'Neymar').first
 	  	player.tweets.create(:text => 'Neymar é muito ruim', :positive => false, :date => Date.today)
 	  	player.tweets.create(:text => 'Neymar vai ser o melhor!', :positive => true, :date => Date.today)
@@ -16,6 +16,6 @@ class PopulatesFakeTweetsForDevMode < ActiveRecord::Migration
 	  	squad.tweets.create(:text => 'Não torço pra essa porcaria de seleção', :positive => false, :date => Date.today)
 	  	squad.tweets.create(:text => 'Seleção campeã!', :positive => true, :date => (Date.today + 1.day))
 	  	squad.tweets.create(:text => 'Seleção campeã do mundo!', :positive => true, :date => (Date.today + 1.day))
-	  end
+	  #end
   end
 end

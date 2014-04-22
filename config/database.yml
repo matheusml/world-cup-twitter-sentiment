@@ -4,3 +4,10 @@ development:
   database: world-cup-twitter-sentiment_development
   username: root
   password: 
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: world-cup-twitter-sentiment_production
+  username: root
+  password:   

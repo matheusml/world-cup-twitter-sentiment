@@ -1,8 +1,8 @@
 class HomeController < ApplicationController
 	def index
-		@squads = Squad.all
-		@active_squad = params[:squad_id] ? Squad.find(params[:squad_id]) : @squads.first
-		@players = @active_squad.players
+		@squads = Squad.all.sort_by{|s| s.name}
+		@active_squad = params[:squad_id] ? Squad.find(params[:squad_id]) : Squad.where(:name => 'Brasil').first
+		@players = @active_squad.players.sort_by{|s| s.name}
 
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.options[:xAxis][:categories] = world_cup_dates

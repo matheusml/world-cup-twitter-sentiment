@@ -22,6 +22,9 @@ class HomeController < ApplicationController
     end
 	end
 
+	def about
+	end
+
 	private
 
 	def world_cup_dates

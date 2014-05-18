@@ -14,20 +14,26 @@ task :tweet_stream => [:environment] do
 	   config.auth_method        = :oauth
 	end
 
-	stream(tracked_players_and_squads)
+	stream(["seleção"])
+	#stream(tracked_players_and_squads)
 end
 
 private
 
 def stream(track)
+    output = File.new('selecao2',"a")
 	tweets = 0
 	TweetStream::Client.new.track(track, language: 'pt') do |status|
-		tweets += 1
-		return if tweets == 500
+      	tweets += 1
+      	output.puts "#{status.text.strip}"
+		#return if tweets == 200
+		if tweets == 200
+			output.close
+		end
 	end
 
-	sleep(30 * 60)
-	stream(track)
+	#sleep(30 * 60)
+	#stream(track)
 end
 
 def tracked_players_and_squads

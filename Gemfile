@@ -17,9 +17,12 @@ gem 'jbuilder', '~> 1.2'
 gem "twitter-bootstrap-rails"
 gem 'tweetstream'
 gem 'lazy_high_charts'
+gem 'puma'
+gem 'trinidad'
+gem 'activerecord-jdbcpostgresql-adapter'
 
 group :production do
-  gem 'activerecord-jdbcpostgresql-adapter', platform: :jruby
+  gem 'activerecord-jdbcpostgresql-adapter'
   #gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'
 end

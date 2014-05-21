@@ -1,13 +1,15 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '1.9.3', :engine => 'jruby', :engine_version => '1.7.5'
 gem 'rails', '4.0.0'
 
 #gem 'pg'
-gem 'mysql2'
+#gem 'mysql2', '0.3.15'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'therubyracer', platforms: :ruby
+gem 'execjs'
+gem 'therubyrhino'
+gem 'activerecord-jdbcmysql-adapter'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'turbolinks'
@@ -17,7 +19,8 @@ gem 'tweetstream'
 gem 'lazy_high_charts'
 
 group :production do
-  gem 'pg', '0.15.1'
+  gem 'activerecord-jdbcpostgresql-adapter', platform: :jruby
+  #gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'
 end
 

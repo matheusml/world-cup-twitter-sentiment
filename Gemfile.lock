@@ -19,6 +19,11 @@ GEM
       activesupport (= 4.0.0)
       arel (~> 4.0.0)
     activerecord-deprecated_finders (1.0.3)
+    activerecord-jdbc-adapter (1.3.6)
+      activerecord (>= 2.2)
+    activerecord-jdbcmysql-adapter (1.3.3)
+      activerecord-jdbc-adapter (~> 1.3.3)
+      jdbc-mysql (>= 5.1.22)
     activesupport (4.0.0)
       i18n (~> 0.6, >= 0.6.4)
       minitest (~> 4.2)
@@ -54,6 +59,7 @@ GEM
     equalizer (0.0.9)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    eventmachine (1.0.3-java)
     execjs (2.0.2)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
@@ -62,20 +68,22 @@ GEM
     http (0.5.0)
       http_parser.rb
     http_parser.rb (0.6.0)
+    http_parser.rb (0.6.0-java)
     i18n (0.6.9)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
+    jdbc-mysql (5.1.27)
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.2.0)
       railties (>= 3.2.16)
     json (1.8.1)
+    json (1.8.1-java)
     lazy_high_charts (1.5.2)
       bundler (>= 1.0)
       hash-deep-merge
-    libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -85,7 +93,6 @@ GEM
     minitest (4.7.5)
     multi_json (1.9.2)
     multipart-post (2.0.0)
-    mysql2 (0.3.15)
     naught (1.0.0)
     pg (0.15.1)
     polyglot (0.3.4)
@@ -113,7 +120,6 @@ GEM
     rake (10.2.2)
     rdoc (4.1.1)
       json (~> 1.4)
-    ref (1.0.5)
     sass (3.2.18)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -133,11 +139,12 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    therubyracer (0.12.1)
-      libv8 (~> 3.16.14.0)
-      ref
+    therubyrhino (2.0.2)
+      therubyrhino_jar (>= 1.7.3)
+    therubyrhino_jar (1.7.4)
     thor (0.19.1)
     thread_safe (0.3.2)
+    thread_safe (0.3.2-java)
     tilt (1.4.1)
     treetop (1.4.15)
       polyglot
@@ -172,20 +179,22 @@ GEM
       json (>= 1.8.0)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
+  activerecord-jdbcmysql-adapter
+  execjs
   jbuilder (~> 1.2)
   jquery-rails
   jquery-ui-rails
   lazy_high_charts
-  mysql2
   pg (= 0.15.1)
   rails (= 4.0.0)
   rails_12factor (= 0.0.2)
   sass-rails (~> 4.0.0)
   sdoc
-  therubyracer
+  therubyrhino
   turbolinks
   tweetstream
   twitter-bootstrap-rails

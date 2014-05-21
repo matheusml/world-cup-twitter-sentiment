@@ -19,8 +19,8 @@ gem 'tweetstream'
 gem 'lazy_high_charts'
 
 group :production do
-  gem 'activerecord-jdbcpostgresql-adapter', platform: :jruby
-  #gem 'pg', '0.15.1'
+  #gem 'activerecord-jdbcpostgresql-adapter', platform: :jruby
+  gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'
 end
 

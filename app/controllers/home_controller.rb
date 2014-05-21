@@ -31,7 +31,7 @@ class HomeController < ApplicationController
 		  config.auth_method        = :oauth
 		end
 
-		TweetStream::Client.new.track(params[:track], language: 'en') do |status|
+		TweetStream::Client.new.track('obama', language: 'en') do |status|
 	  	@tweets = status.text
 	  	break
 		end

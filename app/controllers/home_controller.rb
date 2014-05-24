@@ -23,17 +23,15 @@ class HomeController < ApplicationController
 	end
 
 	def get_tweets
-		TweetStream.configure do |config|
-		  config.consumer_key       = 'BlpfM8bCI4RVELlc5PGhAg'
-		  config.consumer_secret    = 'IJYJ0ga6CP4sNBZ7pCgCFh73aocPXCTmbIKLYVbomIQ'
-		  config.oauth_token        = '15689757-hspmJBwuytAkFlJzKNUpvCIV0skcQbDyCKvrgTLag'
-		  config.oauth_token_secret = '0lufFh9k1j5mQ2DtJ2PswvGIJrZTQfsbxkau0Gp6U0'
-		  config.auth_method        = :oauth
-		end
+		client = Twitter4j4r::Client.new(:consumer_key => 'BlpfM8bCI4RVELlc5PGhAg',
+                                  :consumer_secret => 'IJYJ0ga6CP4sNBZ7pCgCFh73aocPXCTmbIKLYVbomIQ',
+                                  :access_token => '15689757-hspmJBwuytAkFlJzKNUpvCIV0skcQbDyCKvrgTLag',
+                                  :access_secret => '0lufFh9k1j5mQ2DtJ2PswvGIJrZTQfsbxkau0Gp6U0')
 
-		TweetStream::Client.new.track('obama', language: 'en') do |status|
+
+		client.track('obama') do |status|
 	  	@tweets = status.text
-	  	break
+	  	client.stop
 		end
 
 		render json: @tweets

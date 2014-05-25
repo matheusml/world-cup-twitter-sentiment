@@ -1,3 +1,5 @@
+require "time"
+
 class HomeController < ApplicationController
 	def index
 		@squads = Squad.all.sort_by{|s| s.name}
@@ -22,19 +24,24 @@ class HomeController < ApplicationController
     end
 	end
 
+	#EXCLUIR MÉTODO EM BREVE
 	def get_tweets
 		client = Twitter4j4r::Client.new(:consumer_key => 'BlpfM8bCI4RVELlc5PGhAg',
                                   :consumer_secret => 'IJYJ0ga6CP4sNBZ7pCgCFh73aocPXCTmbIKLYVbomIQ',
                                   :access_token => '15689757-hspmJBwuytAkFlJzKNUpvCIV0skcQbDyCKvrgTLag',
                                   :access_secret => '0lufFh9k1j5mQ2DtJ2PswvGIJrZTQfsbxkau0Gp6U0')
-
-
+		mutex = 0
 		client.track('obama') do |status|
-	  	@tweets = status.text
-	  	client.stop
+		  @tweets = status.text
+		  if @tweets.present?
+				client.stop
+				mutex = 1
+			end
 		end
-
-		render json: @tweets
+		sleep(3)
+		if mutex > 0
+			render json: @tweets
+		end
 	end
 
 	def about

@@ -1,8 +1,7 @@
 #encoding: utf-8
 
-#require 'tweetstream'
 require "time"
-require 'json'
+require "json"
 
 desc 'Streamming tweets'
 task :tweet_stream => [:environment] do
@@ -16,13 +15,16 @@ task :tweet_stream => [:environment] do
 	squads = get_squads
 	
 	stream(players, squads, client)
-	#stream('neymar', 'brasil', client)
 end
 
 private
 
 def stream(players, squads, client)
-	#do_stream(players, 'jogadores.json', client)
+	do_stream(players, 'entrada.json', client, 3)
+	puts "-- sleeping"
+	sleep(20)
+	puts "-- classificando"
+	SentimentClassifier.players_classifier
 	retrieve_tweets(Player.all, 'saida.json')
 	#do_stream(squads, 'selecao.json', client)
 	#sleep(30 * 60)
@@ -30,7 +32,7 @@ def stream(players, squads, client)
 end
 
 def retrieve_tweets(entities, file_name)
-	file = File.read(file_name, :encoding => 'iso-8859-1')
+	file = File.read(file_name)#, :encoding => 'iso-8859-1')
 	tweets = JSON.parse(file)
 	tweets["tweets"].each do |tweet|
 		entities_array = entities_contained_in_tweets(entities, tweet["text"])
@@ -55,11 +57,11 @@ def entities_contained_in_tweets(entities, text)
 	entities_array
 end
 
-def do_stream(track, file_path, client)
+def do_stream(track, file_path, client, number_of_tweets)
   count = 0
 	tweets = []
 	client.track(*track) do |status|
-	  if count == 3
+	  if count == number_of_tweets
 	  	generate_json({:tweets => tweets}, file_path)
 		  client.stop
 	  else

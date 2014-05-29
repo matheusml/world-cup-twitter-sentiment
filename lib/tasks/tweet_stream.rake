@@ -16,20 +16,43 @@ end
 private
 
 def stream(players, squads)
+	stream_players(players)
+	stream_squads(squads)
+
+	puts "-- DORMINDO --"
+	sleep(60)
+	#puts "--- chamando de novo"
+	stream(players, squads)
+end
+
+def stream_players(players)
 	client = Twitter4j4r::Client.new(:consumer_key => 'BlpfM8bCI4RVELlc5PGhAg',
                                   :consumer_secret => 'IJYJ0ga6CP4sNBZ7pCgCFh73aocPXCTmbIKLYVbomIQ',
                                   :access_token => '15689757-hspmJBwuytAkFlJzKNUpvCIV0skcQbDyCKvrgTLag',
                                   :access_secret => '0lufFh9k1j5mQ2DtJ2PswvGIJrZTQfsbxkau0Gp6U0')
 
+	puts "--- Iniciando o Stream de Jogadores"
 	latch = java.util.concurrent.CountDownLatch.new(1)
 	do_stream(players, 'entrada.json', client, 10, latch)
 	latch.await
 	SentimentClassifier.players_classifier
 	retrieve_tweets(Player.all, 'saida.json', 'tweets_text.json')
-	#puts "--- contador: #{Tweet.count}"
-	#sleep(10)
-	#puts "--- chamando de novo"
-	#stream(players, squads)
+	puts "--- Contador de Tweets: #{Tweet.count}"
+end
+
+def stream_squads(squads)
+	client = Twitter4j4r::Client.new(:consumer_key => 'BlpfM8bCI4RVELlc5PGhAg',
+                                  :consumer_secret => 'IJYJ0ga6CP4sNBZ7pCgCFh73aocPXCTmbIKLYVbomIQ',
+                                  :access_token => '15689757-hspmJBwuytAkFlJzKNUpvCIV0skcQbDyCKvrgTLag',
+                                  :access_secret => '0lufFh9k1j5mQ2DtJ2PswvGIJrZTQfsbxkau0Gp6U0')
+
+	puts "--- Iniciando o Stream de Selecoes"
+	latch = java.util.concurrent.CountDownLatch.new(1)
+	do_stream(squads, 'entrada.json', client, 10, latch)
+	latch.await
+	SentimentClassifier.squads_classifier
+	retrieve_tweets(Squad.all, 'saida.json', 'tweets_text.json')
+	puts "--- Contador de Tweets: #{Tweet.count}"
 end
 
 def retrieve_tweets(entities, file_name, tweets_text_file)

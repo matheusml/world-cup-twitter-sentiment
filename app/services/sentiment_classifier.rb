@@ -10,8 +10,8 @@ class SentimentClassifier
 			"jogadores-polaridade-NB.model", "entrada.json", "saida.json");
 	end
 
-	def self.squad_classifier
-		classifier = SentimentClassifier.new
+	def self.squads_classifier
+		classifier = SubjectivityClassifier.new
 		classifier.makeClassificationJson("selecao-subjetividade-SVM.model",
 			"selecao-polaridade-NB.model", "entrada.json", "saida.json");
 	end

@@ -6,46 +6,54 @@ require "json"
 desc 'Streamming tweets'
 task :tweet_stream => [:environment] do
 
+	
+	players = get_players
+	squads = get_squads
+	
+	stream(players, squads)
+end
+
+private
+
+def stream(players, squads)
 	client = Twitter4j4r::Client.new(:consumer_key => 'BlpfM8bCI4RVELlc5PGhAg',
                                   :consumer_secret => 'IJYJ0ga6CP4sNBZ7pCgCFh73aocPXCTmbIKLYVbomIQ',
                                   :access_token => '15689757-hspmJBwuytAkFlJzKNUpvCIV0skcQbDyCKvrgTLag',
                                   :access_secret => '0lufFh9k1j5mQ2DtJ2PswvGIJrZTQfsbxkau0Gp6U0')
 
-	players = get_players
-	squads = get_squads
-	
-	stream(players, squads, client)
-end
-
-private
-
-def stream(players, squads, client)
-	do_stream(players, 'entrada.json', client, 3)
-	puts "-- sleeping"
-	sleep(20)
-	puts "-- classificando"
+	latch = java.util.concurrent.CountDownLatch.new(1)
+	do_stream(players, 'entrada.json', client, 10, latch)
+	latch.await
 	SentimentClassifier.players_classifier
-	retrieve_tweets(Player.all, 'saida.json')
-	#do_stream(squads, 'selecao.json', client)
-	#sleep(30 * 60)
-	#stream(players, squads, client)
+	retrieve_tweets(Player.all, 'saida.json', 'tweets_text.json')
+	puts "--- contador: #{Tweet.count}"
+	sleep(10)
+	puts "--- chamando de novo"
+	stream(players, squads)
 end
 
-def retrieve_tweets(entities, file_name)
-	file = File.read(file_name)#, :encoding => 'iso-8859-1')
+def retrieve_tweets(entities, file_name, tweets_text_file)
+	file = File.read(file_name)
 	tweets = JSON.parse(file)
+	tweets_text_file = File.read(tweets_text_file)
+	tweets_text = JSON.parse(tweets_text_file)
 	tweets["tweets"].each do |tweet|
-		entities_array = entities_contained_in_tweets(entities, tweet["text"])
-		save_tweet(entities_array, tweet)
+		text = tweets_text[tweet["id"].to_s]
+		entities_array = entities_contained_in_tweets(entities, text)
+		save_tweet(entities_array, tweet, text)
 	end
 end
 
-def save_tweet(entities, tweet)
+def save_tweet(entities, tweet, text)
 	entities.each do |entity|
-		entity.tweets.create(:text => tweet["text"],
+		begin
+			entity.tweets.create(:text => text,
 												 :positive => tweet["positive"],
 												 :confidence => tweet["confidence"],
 												 :date => DateTime.iso8601(tweet["date"]))
+		rescue ActiveRecord::StatementInvalid => error
+			puts "--- #{error}"
+		end
 	end
 end
 
@@ -57,17 +65,21 @@ def entities_contained_in_tweets(entities, text)
 	entities_array
 end
 
-def do_stream(track, file_path, client, number_of_tweets)
+def do_stream(track, file_path, client, number_of_tweets, latch)
   count = 0
 	tweets = []
+	tweets_text = {}
 	client.track(*track) do |status|
 	  if count == number_of_tweets
 	  	generate_json({:tweets => tweets}, file_path)
+	  	generate_json(tweets_text, 'tweets_text.json')
 		  client.stop
+		  latch.count_down
 	  else
 	  	if status.iso_language_code == 'pt'
       	count += 1
-      	tweets << { :text => status.text, :date => Date.today }
+      	tweets << { :id => count, :text => status.text, :date => Date.today }
+    		tweets_text[count] = status.text
     	end
     end
 	end

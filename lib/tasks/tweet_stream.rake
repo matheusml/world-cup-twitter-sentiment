@@ -5,8 +5,6 @@ require "json"
 
 desc 'Streamming tweets'
 task :tweet_stream => [:environment] do
-
-	
 	players = get_players
 	squads = get_squads
 	
@@ -18,11 +16,6 @@ private
 def stream(players, squads)
 	stream_players(players)
 	stream_squads(squads)
-
-	puts "-- DORMINDO --"
-	sleep(60)
-	#puts "--- chamando de novo"
-	stream(players, squads)
 end
 
 def stream_players(players)

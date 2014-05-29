@@ -1,6 +1,5 @@
 require 'java'
 require 'lib/SentimentClassifier.jar'
-#java_import 'SentimentClassifier';
 java_import 'SubjectivityClassifier';
 
 class SentimentClassifier 

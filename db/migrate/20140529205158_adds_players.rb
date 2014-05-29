@@ -2,8 +2,6 @@
 
 class AddsPlayers < ActiveRecord::Migration
   def change
-    Player.delete_all
-    Tweet.delete_all
   	squad = Squad.where(:name => 'Brasil').first
   	squad.players.create(:name => 'Neymar')
   	squad.players.create(:name => 'Felipão')

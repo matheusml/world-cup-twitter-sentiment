@@ -50,14 +50,19 @@ def stream_squads(squads)
 end
 
 def retrieve_tweets(entities, file_name, tweets_text_file)
-	file = File.read(file_name)
-	tweets = JSON.parse(file)
-	tweets_text_file = File.read(tweets_text_file)
-	tweets_text = JSON.parse(tweets_text_file)
-	tweets["tweets"].each do |tweet|
-		text = tweets_text[tweet["id"].to_s]
-		entities_array = entities_contained_in_tweets(entities, text)
-		save_tweet(entities_array, tweet, text)
+	begin
+		file = File.read(file_name)
+		tweets = JSON.parse(file)
+		tweets_text_file = File.read(tweets_text_file)
+		tweets_text = JSON.parse(tweets_text_file)
+		
+		tweets["tweets"].each do |tweet|
+			text = tweets_text[tweet["id"].to_s]
+			entities_array = entities_contained_in_tweets(entities, text)
+			save_tweet(entities_array, tweet, text)
+		end
+	rescue JSON::ParserError => e
+		puts "--- #{e}"
 	end
 end
 

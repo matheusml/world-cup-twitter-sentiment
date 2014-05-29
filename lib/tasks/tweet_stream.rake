@@ -26,10 +26,10 @@ def stream(players, squads)
 	latch.await
 	SentimentClassifier.players_classifier
 	retrieve_tweets(Player.all, 'saida.json', 'tweets_text.json')
-	puts "--- contador: #{Tweet.count}"
-	sleep(10)
-	puts "--- chamando de novo"
-	stream(players, squads)
+	#puts "--- contador: #{Tweet.count}"
+	#sleep(10)
+	#puts "--- chamando de novo"
+	#stream(players, squads)
 end
 
 def retrieve_tweets(entities, file_name, tweets_text_file)
@@ -78,7 +78,7 @@ def do_stream(track, file_path, client, number_of_tweets, latch)
 	  else
 	  	if status.iso_language_code == 'pt'
       	count += 1
-      	tweets << { :id => count, :text => status.text, :date => Date.today }
+      	tweets << { :id => count, :text => TweetProcesser.preprocess(track, status.text), :date => Date.today }
     		tweets_text[count] = status.text
     	end
     end

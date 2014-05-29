@@ -7,7 +7,6 @@ desc 'Streamming tweets'
 task :tweet_stream => [:environment] do
 	players = get_players
 	squads = get_squads
-	
 	stream(players, squads)
 end
 
@@ -16,6 +15,8 @@ private
 def stream(players, squads)
 	stream_players(players)
 	stream_squads(squads)
+	sleep(30)
+	stream(players, squads)
 end
 
 def stream_players(players)
@@ -26,7 +27,7 @@ def stream_players(players)
 
 	puts "--- Iniciando o Stream de Jogadores"
 	latch = java.util.concurrent.CountDownLatch.new(1)
-	do_stream(players, 'entrada.json', client, 10, latch)
+	do_stream(players, 'entrada.json', client, 50, latch)
 	latch.await
 	SentimentClassifier.players_classifier
 	retrieve_tweets(Player.all, 'saida.json', 'tweets_text.json')
@@ -41,7 +42,7 @@ def stream_squads(squads)
 
 	puts "--- Iniciando o Stream de Selecoes"
 	latch = java.util.concurrent.CountDownLatch.new(1)
-	do_stream(squads, 'entrada.json', client, 10, latch)
+	do_stream(squads, 'entrada.json', client, 50, latch)
 	latch.await
 	SentimentClassifier.squads_classifier
 	retrieve_tweets(Squad.all, 'saida.json', 'tweets_text.json')

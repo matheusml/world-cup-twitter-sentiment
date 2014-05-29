@@ -110,7 +110,7 @@ class AddsPlayers < ActiveRecord::Migration
     squad.players.create(:name => 'Cristiano Ronaldo')
     squad.players.create(:name => 'Pepe')
 
-    squad = Squad.where(:name => 'Béglica').first
+    squad = Squad.where(:name => 'Bélgica').first
     squad.players.create(:name => 'Hazard')
   end
 end

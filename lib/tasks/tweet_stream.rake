@@ -15,8 +15,8 @@ private
 def stream(players, squads)
 	stream_players(players)
 	stream_squads(squads)
-	sleep(30)
-	stream(players, squads)
+	#sleep(30)
+	#stream(players, squads)
 end
 
 def stream_players(players)

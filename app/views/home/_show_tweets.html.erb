@@ -1,4 +1,4 @@
 <h2><%= property.name %></h2>
-<h3>Popularidade média: <%= property.positive_percentage %>%</h3>
+<h3>Popularidade média: <%= PlayerTweets.total_percentages(property) %>%</h3>
 <!--<%= render :partial => 'tweets', :locals => { :tweets => property.tweets.where(:date => Date.today).limit(7) } %> -->
 <%= render :partial => 'tweets', :locals => { :tweets => property.tweets} %>

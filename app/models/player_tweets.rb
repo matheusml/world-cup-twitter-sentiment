@@ -18,4 +18,14 @@ class PlayerTweets
 
 		percentages
 	end
+
+	def self.total_percentages(player)
+		total_tweets = player.tweets.count
+		total_positive_count = player.tweets.where(:positive => true).count
+		if total_tweets > 0
+			( total_positive_count * 100 ) / total_tweets 	
+		else
+			0
+		end
+	end
 end

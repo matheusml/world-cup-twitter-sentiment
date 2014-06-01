@@ -24,6 +24,57 @@ class TweetProcesser
     processed_tweet
 	end
 
+	def self.world_cup_related_strings
+		%W{
+			seleção
+			estreia
+			copa
+			apito
+			bola
+			mundial
+			futebol
+			craque
+			gol
+			final
+			estádio
+			perder
+			perdeu
+			perde
+			perdendo
+			ganhar
+			ganhou
+			ganha
+			ganhando
+			jogam
+			jogo
+			joga
+			jogando
+			jogar
+			jogos
+			forte
+			fraco
+			campeão
+			vitória
+			estrela
+			estrelas
+			derrota
+			derrotar
+			derrotou
+			assistir
+			assistindo
+			assisti
+			vence
+			venceu
+			vencendo
+			vencer
+			titular
+			reserva
+			torcer
+			torce
+			torcendo
+		}
+	end
+
 	
 	def self.stop_words
 		stop_words = %w{

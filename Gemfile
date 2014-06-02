@@ -21,6 +21,7 @@ gem 'puma'
 gem 'trinidad'
 gem 'activerecord-jdbcpostgresql-adapter'
 gem 'twitter4j4r'
+gem 'google-analytics-rails'
 
 group :production do
   gem 'activerecord-jdbcpostgresql-adapter'

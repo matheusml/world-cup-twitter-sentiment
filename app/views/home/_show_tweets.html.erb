@@ -2,4 +2,4 @@
 <h3>Popularidade média: <%= PlayerTweets.total_percentages(property) %>%</h3>
 <!--<%= render :partial => 'tweets', :locals => { :tweets => property.tweets.where(:date => Date.today).limit(7) } %> -->
 <!--<%= render :partial => 'tweets', :locals => { :tweets => property.tweets} %>-->
-<%= render :partial => 'tweets', :locals => { :tweets => property.tweets.order('confidence DESC, date DESC').limit(20) } %>
+<%= render :partial => 'tweets', :locals => { :tweets => property.tweets.order('date DESC, confidence DESC').limit(20) } %>

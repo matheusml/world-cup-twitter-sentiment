@@ -24,6 +24,19 @@ class TweetProcesser
     processed_tweet
 	end
 
+	def self.keep_tweet?(text, is_squad)
+		if is_squad
+			tweet_array = text.split(" ")
+			tweet_array.each do |token|
+				if self.world_cup_related_strings.include?(token.downcase)
+					return true
+				end
+			end
+			return false		
+		end
+		true		
+	end
+
 	def self.world_cup_related_strings
 		%W{
 			seleção

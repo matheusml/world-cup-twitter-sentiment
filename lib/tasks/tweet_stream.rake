@@ -25,7 +25,7 @@ def stream_players(players)
 
 	puts "--- Iniciando o Stream de Jogadores"
 	latch = java.util.concurrent.CountDownLatch.new(1)
-	do_stream(players, 'entrada.json', client, 50, latch)
+	do_stream(players, 'entrada.json', client, latch)
 	latch.await
 	SentimentClassifier.players_classifier
 	retrieve_tweets(Player.all, 'saida.json', 'tweets_text.json')
@@ -40,7 +40,7 @@ def stream_squads(squads)
 
 	puts "--- Iniciando o Stream de Selecoes"
 	latch = java.util.concurrent.CountDownLatch.new(1)
-	do_stream(squads, 'entrada.json', client, 50, latch)
+	do_stream(squads, 'entrada.json', client, latch, true)
 	latch.await
 	SentimentClassifier.squads_classifier
 	retrieve_tweets(Squad.all, 'saida.json', 'tweets_text.json')
@@ -85,18 +85,18 @@ def entities_contained_in_tweets(entities, text)
 	entities_array
 end
 
-def do_stream(track, file_path, client, number_of_tweets, latch)
+def do_stream(track, file_path, client, latch, is_squad = false)
   count = 0
 	tweets = []
 	tweets_text = {}
 	client.track(*track) do |status|
-	  if count == number_of_tweets
+	  if count == 50
 	  	generate_json({:tweets => tweets}, file_path)
 	  	generate_json(tweets_text, 'tweets_text.json')
 		  client.stop
 		  latch.count_down
 	  else
-	  	if status.iso_language_code == 'pt'
+	  	if status.iso_language_code == 'pt' && !status.text.include?('http') && TweetProcesser.keep_tweet?(status.text, is_squad)
       	count += 1
       	tweets << { :id => count, :text => TweetProcesser.preprocess(track, status.text), :date => Date.today }
     		tweets_text[count] = status.text

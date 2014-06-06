@@ -4,6 +4,7 @@ class HomeController < ApplicationController
 	def index
 		@squads = Squad.all.sort_by{|s| s.name}
 		@active_squad = params[:squad_id] ? Squad.find(params[:squad_id]) : Squad.where(:name => 'Brasil').first
+		@tweets = @active_squad.tweets.where('date >= ?', Date.today).order('confidence DESC')
 		@players = @active_squad.players.sort_by{|s| s.name}
 
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
@@ -16,6 +17,8 @@ class HomeController < ApplicationController
 
 	def show_tweets
 		@player = Player.find params[:player_id]
+		@tweets = @player.tweets.where('date >= ?', Date.today).order('confidence DESC')
+		
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.options[:xAxis][:categories] = world_cup_dates
       f.options[:yAxis][:min] = 0
@@ -50,7 +53,7 @@ class HomeController < ApplicationController
 	private
 
 	def world_cup_dates
-		['02/06', '03/06', '04/06', '05/06', '06/06', '07/06', '08/06', '09/06', '10/06', '11/06']
+		['05/06', '06/06', '07/06', '08/06', '09/06', '10/06', '11/06']
 =begin		
 		['12/06', '13/06', '14/06', '15/06', '16/06',
 		 '17/06', '18/06', '19/06', '20/06', '21/06',
@@ -58,7 +61,7 @@ class HomeController < ApplicationController
 		 '27/06', '28/06', '29/06', '30/06', '01/07',
 		 '02/07', '03/07', '04/07', '05/07', '06/07',
 		 '07/07', '08/07', '09/07', '10/07', '11/07',
-		 '12/07']
+		 '12/07', '13/07']
 =end
 	end
 end

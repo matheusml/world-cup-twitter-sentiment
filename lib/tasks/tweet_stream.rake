@@ -90,7 +90,7 @@ def do_stream(track, file_path, client, latch, is_squad = false)
 	tweets = []
 	tweets_text = {}
 	client.track(*track) do |status|
-	  if count == 5
+	  if count == 50
 	  	generate_json({:tweets => tweets}, file_path)
 	  	generate_json(tweets_text, 'tweets_text.json')
 		  client.stop

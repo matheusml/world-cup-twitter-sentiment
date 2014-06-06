@@ -24,67 +24,44 @@ class TweetProcesser
     processed_tweet
 	end
 
-	def self.keep_tweet?(text, is_squad)
+	def self.keep_tweet?(text, entities, is_squad)
 		if is_squad
-			tweet_array = text.split(" ")
-			tweet_array.each do |token|
-				if self.world_cup_related_strings.include?(token.downcase)
-					return true
+			entities.each do |entity|
+				self.world_cup_related_strings.each do |word|
+					if text.downcase.include?(entity.downcase + " " + word.downcase)
+						return true
+					end
 				end
 			end
-			return false		
-		end
-		true		
+
+			false
+		else
+			true
+		end		
 	end
 
 	def self.world_cup_related_strings
 		%W{
-			seleção
-			estreia
-			copa
-			apito
-			bola
-			mundial
-			futebol
-			craque
-			gol
-			final
-			estádio
-			perder
+			é
+			foi
+			está
+			será
 			perdeu
 			perde
-			perdendo
-			ganhar
 			ganhou
 			ganha
-			ganhando
-			jogam
-			jogo
+			jogou
 			joga
-			jogando
-			jogar
-			jogos
-			forte
-			fraco
-			campeão
-			vitória
-			estrela
-			estrelas
-			derrota
-			derrotar
-			derrotou
-			assistir
-			assistindo
-			assisti
-			vence
+			não
+			empatou
+			empata
+			arrebentou
+			arrebenta
+			mandoumanda
 			venceu
-			vencendo
-			vencer
-			titular
-			reserva
-			torcer
-			torce
-			torcendo
+			vence
+			vai
+			vem		
 		}
 	end
 

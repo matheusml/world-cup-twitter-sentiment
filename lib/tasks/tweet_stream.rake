@@ -13,7 +13,7 @@ end
 private
 
 def stream(players, squads)
-	stream_players(players)
+  stream_players(players)
 	stream_squads(squads)
 end
 
@@ -90,15 +90,15 @@ def do_stream(track, file_path, client, latch, is_squad = false)
 	tweets = []
 	tweets_text = {}
 	client.track(*track) do |status|
-	  if count == 50
+	  if count == 5
 	  	generate_json({:tweets => tweets}, file_path)
 	  	generate_json(tweets_text, 'tweets_text.json')
 		  client.stop
 		  latch.count_down
 	  else
-	  	if status.iso_language_code == 'pt' && !status.text.include?('http') && TweetProcesser.keep_tweet?(status.text, is_squad)
+	  	if status.iso_language_code == 'pt' && !status.text.include?('http') && TweetProcesser.keep_tweet?(status.text, track, is_squad)
       	count += 1
-      	tweets << { :id => count, :text => TweetProcesser.preprocess(track, status.text), :date => (Date.today - 3.hours) }
+      	tweets << { :id => count, :text => TweetProcesser.preprocess(track, status.text), :date => Date.today }
     		tweets_text[count] = status.text
     	end
     end

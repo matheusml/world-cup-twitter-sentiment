@@ -1,0 +1,47 @@
+<div class="row">
+	<div class="span8">
+		<h2>OLE-UFF - Opinion Level Estimation</h2>
+
+		<p>OLE-UFF é um aplicativo desenvolvido pela Equipe de Mineração de Opiniões
+		do Departamento de Ciência da Computação da Universidade Federal
+		Fluminense (UFF). O objetivo é dar ao usuário a possibilidade de
+		acompanhar a popularidade de seleções participantes da Copa do Mundo de
+		2014 e de seus principais jogadores.</p>
+
+		<p>O sistema consiste em coletar Tweets que contenham referências
+		às seleções e aos jogadores, classificando o conteúdo de cada Tweet
+		como sendo uma opinião positiva ou negativa a respeito desses competidores,
+		revelando assim a popularidade dos mesmos.</p>
+
+		<p>Os Tweets coletados pelo sistema são categorizados em dois diferentes
+		grupos: Tweets sobre Seleções e Tweets sobre Jogadores.
+		Tweets de cada grupo são, então, classificados, separadamente, quanto aos
+		seus conteúdos, através de uma estratégia de dois passos.
+		Primeiramente, um classificador SVM os rotula como subjetivos (que
+		expressam algum sentimento) ou objetivos (que relatam apenas fatos ou que
+		não expressam nenhum sentimento).
+		Em seguida, um classificador Naive Bayes é responsável por rotular os
+		Tweets subjetivos quanto às suas polaridades, ou seja,
+		se tendem a positivos ou negativos.</p>
+
+		<p>Para a construção dos classificadores, foram utilizadas duas bases de
+		dados de treinamento, uma contendo Tweets referentes a
+		Seleções e outra com Tweets referentes a Jogadores, que foram manualmente
+		rotuladas por três integrantes da Equipe.
+		As acurácias dos classificadores utilizados foram calculadas a partir
+		da técnica de validação cruzada com 10 partições.
+		Os classificadores SVM, empregados na classificação de subjetividade,
+		obtiveram acurácias de 75.5% na classificação de Tweets referentes a
+		Seleções e 80.13% na classificação de Tweets referentes a Jogadores.
+		Já os classificadores Naive Bayes, utilizados na classificação da
+		polaridade, obtiveram acurácias de 73.8% na classificação de Tweets sobre
+		Seleções e 76.7% na classificação de Tweets sobre Jogadores.</p>
+
+		<p>OLE-UFF é resultado do projeto final de graduação do aluno
+		Matheus Lima e contou com a colaboração dos mestrandos
+		Jonnathan Carvalho e Carlos Augusto Fernandes Filho.
+		Todos jogam na Equipe de Mineração de Opiniões do IC,
+		coordenada pela pesquisadora Adriana Prado, que realiza
+		seu pós-doutorado no IC, e pelo professor Alexandre Plastino.</p>
+	</div>
+</div>

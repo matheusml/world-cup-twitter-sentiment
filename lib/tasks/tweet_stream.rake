@@ -98,7 +98,7 @@ def do_stream(track, file_path, client, latch, is_squad = false)
 	  else
 	  	if status.iso_language_code == 'pt' && !status.text.include?('http') && TweetProcesser.keep_tweet?(status.text, is_squad)
       	count += 1
-      	tweets << { :id => count, :text => TweetProcesser.preprocess(track, status.text), :date => Date.today }
+      	tweets << { :id => count, :text => TweetProcesser.preprocess(track, status.text), :date => (Date.today - 3.hours) }
     		tweets_text[count] = status.text
     	end
     end

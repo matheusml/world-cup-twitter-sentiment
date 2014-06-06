@@ -5,9 +5,11 @@
 			<h3>Tweets recentes:</h3>
     <% end %>
   	<% tweets.each do |tweet| %>
-    <tr>
-      	<td><b>(<%= tweet.confidence %>)</b><span class="label <%= positive_or_negative_class(tweet.positive) %>"><%= positive_or_negative_text(tweet.positive) %></span> <b><%= tweet.date.strftime("%d/%m/%Y as %I:%M") %></b> - <%= tweet.text %></td>
-    </tr>
+      <% unless tweet.text.include?("RT") %>
+        <tr>
+        	<td><b>(<%= tweet.confidence %>)</b><span class="label <%= positive_or_negative_class(tweet.positive) %>"><%= positive_or_negative_text(tweet.positive) %></span> <b><%= tweet.date.strftime("%d/%m/%Y as %I:%M") %></b> - <%= tweet.text %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

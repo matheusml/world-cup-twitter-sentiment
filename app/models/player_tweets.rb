@@ -8,7 +8,7 @@ class PlayerTweets
 			month = split_date[1].to_i
 			current_date = Date.new(2014, month, day)
 
-			tweets = player.tweets.where('date > ? AND date < ?', Date.today-1, Date.today+1)
+			tweets = player.tweets.where(:date => current_date)
 
 			if tweets.present?
 				positive = tweets.where(:positive => true).count

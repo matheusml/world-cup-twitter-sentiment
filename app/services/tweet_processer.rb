@@ -1,7 +1,7 @@
 #encoding: utf-8
 
 class TweetProcesser
-	def self.preprocess(entities, text)
+	def self.preprocess(text)
 		username_regex = /@([a-z0-9_]+)/i
 		url_regex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
 
@@ -9,16 +9,21 @@ class TweetProcesser
     processed_tweet = String.new
     tweet_array.each do |token|
       if self.stop_words.include?(token.downcase)
-        processed_tweet += "STOPWORD "
-      elsif entities.any?{ |s| s.casecmp(token)==0 }
-        processed_tweet += "SEARCHSTRING "
+        processed_tweet += "stopword "
       elsif username_regex.match(token)
-        processed_tweet += "USERNAME "
+        processed_tweet += "username "
       elsif url_regex.match(token)
-        processed_tweet += "URL "
+        processed_tweet += "url "
       else
         processed_tweet += "#{token} "
       end
+    end
+
+    processed_tweet.downcase!
+    self.entities.each do |ent|
+	    if processed_tweet.include? ent.downcase
+	    	processed_tweet.gsub!(ent.downcase, 'searchstring ')
+	    end
     end
 
     processed_tweet
@@ -38,6 +43,17 @@ class TweetProcesser
 		else
 			true
 		end		
+	end
+
+	def self.entities
+		entities = []
+		Player.all.each do |p|
+			entities << p.name
+		end
+		Squad.all.each do |s|
+			entities << s.name
+		end
+		entities
 	end
 
 	def self.world_cup_related_strings

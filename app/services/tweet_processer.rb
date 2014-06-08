@@ -2,6 +2,7 @@
 
 class TweetProcesser
 	def self.preprocess(text)
+		puts "___ #{text}"
 		username_regex = /@([a-z0-9_]+)/i
 		url_regex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
 
@@ -19,12 +20,20 @@ class TweetProcesser
       end
     end
 
+    processed_tweet.gsub!('.', '')
+    processed_tweet.gsub!(',', '')
+    processed_tweet.gsub!('"', '')
     processed_tweet.downcase!
+
     self.entities.each do |ent|
 	    if processed_tweet.include? ent.downcase
-	    	processed_tweet.gsub!(ent.downcase, 'searchstring ')
+	    	processed_tweet.gsub!(ent.downcase + ' ', 'searchstring ')
+	    	processed_tweet.gsub!(ent.downcase + '?', 'searchstring ?')
+	    	processed_tweet.gsub!(ent.downcase + '!', 'searchstring !')
 	    end
     end
+
+    puts "--- #{processed_tweet}"
 
     processed_tweet
 	end

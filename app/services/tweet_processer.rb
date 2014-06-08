@@ -59,7 +59,6 @@ class TweetProcesser
 		Squad.all.each do |s|
 			entities << s.name
 		end
-		puts "--- #{entities.inspect}"
 		entities
 	end
 

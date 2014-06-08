@@ -2,7 +2,6 @@
 
 class TweetProcesser
 	def self.preprocess(text)
-		puts "___ #{text}"
 		username_regex = /@([a-z0-9_]+)/i
 		url_regex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
 
@@ -33,8 +32,6 @@ class TweetProcesser
 	    end
     end
 
-    puts "--- #{processed_tweet}"
-
     processed_tweet
 	end
 
@@ -62,6 +59,7 @@ class TweetProcesser
 		Squad.all.each do |s|
 			entities << s.name
 		end
+		puts "--- #{entities.inspect}"
 		entities
 	end
 

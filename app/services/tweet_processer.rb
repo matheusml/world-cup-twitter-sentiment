@@ -64,24 +64,20 @@ class TweetProcesser
 
 	def self.world_cup_related_strings
 		%W{
+			nunca
+			surpreendeu
 			é
 			foi
 			está
 			será
 			perdeu
-			perde
 			ganhou
-			ganha
 			jogou
-			joga
 			não
 			empatou
-			empata
 			arrebentou
-			arrebenta
-			mandoumanda
+			mandou
 			venceu
-			vence
 			vai
 			vem		
 		}

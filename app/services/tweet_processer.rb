@@ -98,7 +98,6 @@ class TweetProcesser
 		  pra
 		  pois
 		  com
-		  nao
 		  uma
 		  os
 		  no

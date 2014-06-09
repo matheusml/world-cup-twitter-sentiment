@@ -43,11 +43,11 @@ def stream_squads(squads)
 	do_stream(squads, 'entrada.json', client, latch, true)
 	latch.await
 	SentimentClassifier.squads_classifier
-	retrieve_tweets(Squad.all, 'saida.json', 'tweets_text.json')
+	retrieve_tweets(Squad.all, 'saida.json', 'tweets_text.json', true)
 	puts "--- Contador de Tweets: #{Tweet.count}"
 end
 
-def retrieve_tweets(entities, file_name, tweets_text_file)
+def retrieve_tweets(entities, file_name, tweets_text_file, is_squad = false)
 	begin
 		file = File.read(file_name)
 		tweets = JSON.parse(file)
@@ -56,7 +56,7 @@ def retrieve_tweets(entities, file_name, tweets_text_file)
 		
 		tweets["tweets"].each do |tweet|
 			text = tweets_text[tweet["id"].to_s]
-			entities_array = entities_contained_in_tweets(entities, text)
+			entities_array = TweetProcesser.entities_contained_in_tweets(entities, text, is_squad)
 			save_tweet(entities_array, tweet, text)
 		end
 	rescue JSON::ParserError => e
@@ -75,14 +75,6 @@ def save_tweet(entities, tweet, text)
 			puts "--- #{error}"
 		end
 	end
-end
-
-def entities_contained_in_tweets(entities, text)
-	entities_array = []
-	entities.each do |entity|
-		entities_array << entity if text.downcase.include? entity.name.downcase
-	end
-	entities_array
 end
 
 def do_stream(track, file_path, client, latch, is_squad = false)

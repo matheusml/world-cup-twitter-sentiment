@@ -35,6 +35,23 @@ class TweetProcesser
     processed_tweet
 	end
 
+	def self.entities_contained_in_tweets(entities, text, is_squad)
+		entities_array = []
+		entities.each do |entity|
+			if is_squad
+				self.world_cup_related_strings.each do |word|
+					if text.downcase.include?(entity.name.downcase + " " + word.downcase)
+						entities_array << entity if text.downcase.include? entity.name.downcase
+					end
+				end
+			else
+				entities_array << entity if text.downcase.include? entity.name.downcase
+			end
+
+		end
+		entities_array
+	end
+
 	def self.keep_tweet?(text, entities, is_squad)
 		if is_squad
 			entities.each do |entity|

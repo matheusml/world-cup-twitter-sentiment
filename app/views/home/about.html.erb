@@ -17,28 +17,28 @@
 			revelando assim a popularidade dos mesmos.</p>
 
 			<p>Os Tweets coletados pelo sistema são categorizados em dois diferentes
-			grupos: Tweets sobre Seleções e Tweets sobre Jogadores.
-			Tweets de cada grupo são, então, classificados, separadamente, quanto aos
-			seus conteúdos, através de uma estratégia de dois passos.
-			Primeiramente, um classificador SVM os rotula como subjetivos (que
-			expressam algum sentimento) ou objetivos (que relatam apenas fatos ou que
-			não expressam nenhum sentimento).
-			Em seguida, um classificador Naive Bayes é responsável por rotular os
-			Tweets subjetivos quanto às suas polaridades, ou seja,
-			se tendem a positivos ou negativos.</p>
+grupos: Tweets sobre seleções e Tweets sobre jogadores. Tweets de cada
+grupo são, então, classificados, separadamente, quanto aos seus conteúdos,
+através de uma estratégia de dois passos. Primeiramente, um classificador
+Naive Bayes (diferente para cada grupo de Tweets) os rotula como
+subjetivos (que expressam algum sentimento) ou objetivos (que relatam
+apenas fatos ou que não expressam nenhum sentimento). Em seguida, um
+classificador Naive Bayes e outro SVM são responsáveis por rotular os
+Tweets subjetivos sobre jogadores e seleções, respectivamente, quanto às
+suas polaridades, ou seja, se tendem a positivos ou negativos.</p>
 
 			<p>Para a construção dos classificadores, foram utilizadas duas bases de
-			dados de treinamento, uma contendo Tweets referentes a
-			Seleções e outra com Tweets referentes a Jogadores, que foram manualmente
-			rotuladas por três integrantes da Equipe.
-			As taxas de acerto dos classificadores utilizados foram calculadas a partir
-			da técnica de validação cruzada com 10 partições.
-			Os classificadores SVM, empregados na classificação de subjetividade,
-			obtiveram taxas de acerto de 75.5% na classificação de Tweets referentes a
-			Seleções e 80.13% na classificação de Tweets referentes a Jogadores.
-			Já os classificadores Naive Bayes, utilizados na classificação da
-			polaridade, obtiveram taxas de acerto de 73.8% na classificação de Tweets sobre
-			Seleções e 76.7% na classificação de Tweets sobre Jogadores.</p>
+dados de treinamento, uma contendo Tweets referentes a seleções e outra
+com Tweets referentes a jogadores, que foram manualmente rotuladas por
+três integrantes da Equipe. As taxas de acerto dos classificadores
+utilizados foram calculadas a partir da técnica de validação cruzada com
+10 partições. Os classificadores Naive Bayes, empregados na classificação
+de subjetividade, obtiveram taxas de acerto de 83% na classificação de
+Tweets referentes a jogadores e 77% na classificação de Tweets referentes
+a seleções. Já os classificadores Naive Bayes e SVM, utilizados na
+classificação da polaridade de Tweets sobre jogadores e seleções,
+respectivamente,  obtiveram taxas de acerto de 75,22% e 73%,
+respectivamente.</p>
 
 			<p>OLE-UFF é resultado do projeto final de graduação do aluno
 			Matheus Lima e contou com a colaboração dos mestrandos

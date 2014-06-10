@@ -69,7 +69,8 @@ def save_tweet(entities, tweet, text)
 		begin
 			entity.tweets.create(:text => text,
 												 :positive => tweet["positive"],
-												 :confidence => tweet["confidence"],
+												 :confidence => tweet["polarity_confidence"],
+												 :subjectivity_confidence => tweet["subjectivity_confidence"],
 												 :date => DateTime.iso8601(tweet["date"]))
 		rescue ActiveRecord::StatementInvalid => error
 			puts "--- #{error}"

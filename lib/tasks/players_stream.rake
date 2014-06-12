@@ -4,18 +4,12 @@ require "time"
 require "json"
 
 desc 'Streamming tweets'
-task :tweet_stream => [:environment] do
+task :players_stream => [:environment] do
 	players = get_players
-	squads = get_squads
-	stream(players, squads)
+	stream_players(players)
 end
 
 private
-
-def stream(players, squads)
-  stream_players(players)
-	stream_squads(squads)
-end
 
 def stream_players(players)
 	client = Twitter4j4r::Client.new(:consumer_key => 'BlpfM8bCI4RVELlc5PGhAg',
@@ -32,22 +26,7 @@ def stream_players(players)
 	puts "--- Contador de Tweets: #{Tweet.count}"
 end
 
-def stream_squads(squads)
-	client = Twitter4j4r::Client.new(:consumer_key => 'BlpfM8bCI4RVELlc5PGhAg',
-                                  :consumer_secret => 'IJYJ0ga6CP4sNBZ7pCgCFh73aocPXCTmbIKLYVbomIQ',
-                                  :access_token => '15689757-hspmJBwuytAkFlJzKNUpvCIV0skcQbDyCKvrgTLag',
-                                  :access_secret => '0lufFh9k1j5mQ2DtJ2PswvGIJrZTQfsbxkau0Gp6U0')
-
-	puts "--- Iniciando o Stream de Selecoes"
-	latch = java.util.concurrent.CountDownLatch.new(1)
-	do_stream(squads, 'entrada.json', client, latch, true)
-	latch.await
-	SentimentClassifier.squads_classifier
-	retrieve_tweets(Squad.all, 'saida.json', 'tweets_text.json', true)
-	puts "--- Contador de Tweets: #{Tweet.count}"
-end
-
-def retrieve_tweets(entities, file_name, tweets_text_file, is_squad = false)
+def retrieve_tweets(entities, file_name, tweets_text_file)
 	begin
 		file = File.read(file_name)
 		tweets = JSON.parse(file)
@@ -56,7 +35,7 @@ def retrieve_tweets(entities, file_name, tweets_text_file, is_squad = false)
 		
 		tweets["tweets"].each do |tweet|
 			text = tweets_text[tweet["id"].to_s]
-			entities_array = TweetProcesser.entities_contained_in_tweets(entities, text, is_squad)
+			entities_array = TweetProcesser.entities_contained_in_tweets(entities, text, false)
 			save_tweet(entities_array, tweet, text)
 		end
 	rescue JSON::ParserError => e
@@ -88,7 +67,7 @@ def keep_tweet(tweet)
   tweet["subjectivity_confidence"] && tweet["subjectivity_confidence"] > 0.95
 end
 
-def do_stream(track, file_path, client, latch, is_squad = false)
+def do_stream(track, file_path, client, latch)
   count = 0
 	tweets = []
 	tweets_text = {}
@@ -101,7 +80,7 @@ def do_stream(track, file_path, client, latch, is_squad = false)
 		  client.stop
 		  latch.count_down
 	  else
-	  	if status.iso_language_code == 'pt' && !status.text.include?('http') && TweetProcesser.keep_tweet?(status.text, track, is_squad)
+	  	if status.iso_language_code == 'pt' && !status.text.include?('http') && TweetProcesser.keep_tweet?(status.text, track, false)
       	count += 1
       	tweets << { :id => count, :text => TweetProcesser.preprocess(status.text), :date => Date.today }
     		tweets_text[count] = status.text
@@ -118,14 +97,6 @@ def generate_json(tweets, file_path)
   File.open(file_path,"w") do |f|
 	  f.write(tweets.to_json)
   end
-end
-
-def get_squads
-	track = []
-	Squad.all.each do |squad|
-		track << squad.name
-	end
-	track
 end
 
 def get_players

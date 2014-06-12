@@ -67,15 +67,22 @@ end
 def save_tweet(entities, tweet, text)
 	entities.each do |entity|
 		begin
-			entity.tweets.create(:text => text,
-												 :positive => tweet["positive"],
-												 :confidence => tweet["polarity_confidence"],
-												 :subjectivity_confidence => tweet["subjectivity_confidence"],
-												 :date => DateTime.iso8601(tweet["date"]))
+			if keep_tweet(tweet)
+				entity.tweets.create(:text => text,
+														 :positive => tweet["positive"],
+														 :confidence => tweet["polarity_confidence"],
+														 :subjectivity_confidence => tweet["subjectivity_confidence"],
+														 :date => DateTime.iso8601(tweet["date"]))
+			end
 		rescue ActiveRecord::StatementInvalid => error
 			puts "--- #{error}"
 		end
 	end
+end
+
+def keep_tweet(tweet)
+	tweet["polarity_confidence"] &&	tweet["polarity_confidence"] > 0.7  &&
+  tweet["subjectivity_confidence"] && tweet["subjectivity_confidence"] > 0.95
 end
 
 def do_stream(track, file_path, client, latch, is_squad = false)
@@ -83,7 +90,7 @@ def do_stream(track, file_path, client, latch, is_squad = false)
 	tweets = []
 	tweets_text = {}
 	client.track(*track) do |status|
-	  if count == 20
+	  if count == 50
 	  	generate_json({:tweets => tweets}, file_path)
 	  	generate_json(tweets_text, 'tweets_text.json')
 		  client.stop

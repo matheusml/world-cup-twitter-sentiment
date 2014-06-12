@@ -6,7 +6,7 @@
     <% end %>
   	<% tweets.each do |tweet| %>
       <tr>
-      	<td><b>(<%= tweet.subjectivity_confidence %>) - (<%= tweet.confidence %>)</b><span class="label <%= positive_or_negative_class(tweet.positive) %>"><%= positive_or_negative_text(tweet.positive) %></span> <b><%= tweet.date.strftime("%d/%m/%Y") %></b> - <%= tweet.text %></td>
+      	<td><span class="label <%= positive_or_negative_class(tweet.positive) %>"><%= positive_or_negative_text(tweet.positive) %></span> <b><%= tweet.date.strftime("%d/%m/%Y") %></b> - <%= tweet.text %></td>
       </tr>
     <% end %>
   </tbody>

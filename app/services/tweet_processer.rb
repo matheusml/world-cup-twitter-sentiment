@@ -49,7 +49,12 @@ class TweetProcesser
 			end
 
 		end
-		entities_array
+
+		if !is_squad && entities_array.length > 1
+			[]
+		else
+		 	entities_array
+		end
 	end
 
 	def self.keep_tweet?(text, entities, is_squad)

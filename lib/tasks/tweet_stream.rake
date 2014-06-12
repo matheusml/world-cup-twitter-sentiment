@@ -68,6 +68,9 @@ def save_tweet(entities, tweet, text)
 	entities.each do |entity|
 		begin
 			if keep_tweet(tweet)
+				tweet["positive"] = true  if contains_positive_emoticon?(text)
+				tweet["positive"] = false if contains_negative_emoticon?(text)
+
 				entity.tweets.create(:text => text,
 														 :positive => tweet["positive"],
 														 :confidence => tweet["polarity_confidence"],
@@ -92,7 +95,9 @@ def do_stream(track, file_path, client, latch, is_squad = false)
 	client.track(*track) do |status|
 	  if count == 50
 	  	generate_json({:tweets => tweets}, file_path)
+	  	sleep(3)
 	  	generate_json(tweets_text, 'tweets_text.json')
+	  	sleep(3)
 		  client.stop
 		  latch.count_down
 	  else
@@ -105,7 +110,7 @@ def do_stream(track, file_path, client, latch, is_squad = false)
 	end
 end
 
-def generate_json(tweets, file_path)
+def generate_json(tweets, file_path)	
 	if File.exist?(file_path)
     File.delete(file_path) 
   end
@@ -129,4 +134,45 @@ def get_players
 		track << player.name
 	end
 	track
+end
+
+def contains_positive_emoticon?(text)
+	positive_emoticons.each do |emoticon|
+		return true if text.include? emoticon
+	end
+	false
+end
+
+def contains_negative_emoticon?(text)
+	negative_emoticons.each do |emoticon|
+		return true if text.include? emoticon
+	end
+	false
+end
+
+def positive_emoticons
+	%W{
+			=D
+			:D
+			;-D
+			:-)
+			;)
+			=)
+			:)
+			=]
+			;]
+			:]		
+		}
+end
+
+def negative_emoticons
+	%W{
+		  :-(
+			=(
+			:(
+			=(
+			:(
+			=/
+			:/		
+		}
 end

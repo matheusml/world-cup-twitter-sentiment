@@ -4,7 +4,7 @@ class HomeController < ApplicationController
 	def index
 		@squads = Squad.all.sort_by{|s| s.name}
 		@active_squad = params[:squad_id] ? Squad.find(params[:squad_id]) : Squad.where(:name => 'Brasil').first
-		@tweets = @active_squad.tweets.where("date >= ? and text NOT LIKE ?", Date.today, '%RT %').order('confidence DESC').limit(10)
+		@tweets = @active_squad.tweets.select('DISTINCT(text), positive, date').where("date >= ? and text NOT LIKE ?", Date.today, '%RT %').order('confidence DESC').limit(10)
 		@players = @active_squad.players.sort_by{|s| s.name}
 
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
@@ -17,7 +17,7 @@ class HomeController < ApplicationController
 
 	def show_tweets
 		@player = Player.find params[:player_id]
-		@tweets = @player.tweets.where("date >= ? and text NOT LIKE ?", Date.today, '%RT %').order('confidence DESC').limit(10)
+		@tweets = @player.tweets.select('DISTINCT(text), positive, date').where("date >= ? and text NOT LIKE ?", Date.today, '%RT %').order('confidence DESC').limit(10)
 		
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.options[:xAxis][:categories] = world_cup_dates

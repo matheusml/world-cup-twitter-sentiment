@@ -35,7 +35,7 @@ def retrieve_tweets(entities, file_name, tweets_text_file)
 		
 		tweets["tweets"].each do |tweet|
 			text = tweets_text[tweet["id"].to_s]
-			entities_array = TweetProcesser.entities_contained_in_tweets(entities, text, false)
+			entities_array = TweetProcesser.entities_contained_in_tweets(entities, text)
 			save_tweet(entities_array, tweet, text)
 		end
 	rescue JSON::ParserError => e
@@ -83,6 +83,7 @@ def do_stream(track, file_path, client, latch)
 		  latch.count_down
 	  else
 	  	if status.iso_language_code == 'pt' && !status.text.include?('http')
+	  		puts "-- #{status.text}"
       	count += 1
       	tweets << { :id => count, :text => TweetProcesser.preprocess(status.text), :date => Date.today }
     		tweets_text[count] = status.text

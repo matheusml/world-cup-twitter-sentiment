@@ -35,7 +35,7 @@ def retrieve_tweets(entities, file_name, tweets_text_file)
 		
 		tweets["tweets"].each do |tweet|
 			text = tweets_text[tweet["id"].to_s]
-			entities_array = TweetProcesser.entities_contained_in_tweets(entities, text, true)
+			entities_array = TweetProcesser.entities_contained_in_tweets(entities, text)
 			save_tweet(entities_array, tweet, text)
 		end
 	rescue JSON::ParserError => e
@@ -44,12 +44,14 @@ def retrieve_tweets(entities, file_name, tweets_text_file)
 end
 
 def save_tweet(entities, tweet, text)
-	entities.each do |entity|
+	if entities.length == 1
 		begin
 			if keep_tweet(tweet)
 				tweet["positive"] = true  if contains_positive_emoticon?(text)
 				tweet["positive"] = false if contains_negative_emoticon?(text)
 
+				entity = entities.first
+	
 				entity.tweets.create(:text => text,
 														 :positive => tweet["positive"],
 														 :confidence => tweet["polarity_confidence"],

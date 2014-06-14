@@ -44,12 +44,14 @@ def retrieve_tweets(entities, file_name, tweets_text_file)
 end
 
 def save_tweet(entities, tweet, text)
-	entities.each do |entity|
+	if entities.length == 1
 		begin
 			if keep_tweet(tweet)
 				tweet["positive"] = true  if contains_positive_emoticon?(text)
 				tweet["positive"] = false if contains_negative_emoticon?(text)
 
+				entity = entities.first
+	
 				entity.tweets.create(:text => text,
 														 :positive => tweet["positive"],
 														 :confidence => tweet["polarity_confidence"],
@@ -80,7 +82,7 @@ def do_stream(track, file_path, client, latch)
 		  client.stop
 		  latch.count_down
 	  else
-	  	if status.iso_language_code == 'pt' && !status.text.include?('http') && TweetProcesser.keep_tweet?(status.text, track, false)
+	  	if status.iso_language_code == 'pt' && !status.text.include?('http')
       	count += 1
       	tweets << { :id => count, :text => TweetProcesser.preprocess(status.text), :date => Date.today }
     		tweets_text[count] = status.text

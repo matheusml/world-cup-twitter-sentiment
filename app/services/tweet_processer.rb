@@ -50,27 +50,19 @@ class TweetProcesser
 
 		end
 
-		if !is_squad && entities_array.length > 1
-			[]
-		else
-		 	entities_array
-		end
+		entities_array
 	end
 
-	def self.keep_tweet?(text, entities, is_squad)
-		if is_squad
-			entities.each do |entity|
-				self.world_cup_related_strings.each do |word|
-					if text.downcase.include?(entity.downcase + " " + word.downcase)
-						return true
-					end
+	def self.keep_tweet?(text, entities)
+		entities.each do |entity|
+			self.world_cup_related_strings.each do |word|
+				if text.downcase.include?(entity.downcase + " " + word.downcase)
+					return true
 				end
 			end
+		end
 
-			false
-		else
-			true
-		end		
+		false
 	end
 
 	def self.entities

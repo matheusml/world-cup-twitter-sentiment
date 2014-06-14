@@ -9,7 +9,7 @@ class HomeController < ApplicationController
 		@players = @active_squad.players.sort_by{|s| s.name}
 
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.options[:xAxis][:categories] = world_cup_dates
+      f.options[:xAxis][:categories] = PlayerTweets.dates(@active_squad, world_cup_dates)
       f.options[:yAxis][:min] = 0
       f.options[:yAxis][:max] = 100
       f.series(:type=> 'spline',:name=> '% Tweets positivos', :data=> PlayerTweets.tweets_percentage(@active_squad, world_cup_dates))

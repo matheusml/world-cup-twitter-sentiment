@@ -1,4 +1,23 @@
 class PlayerTweets
+	def self.dates(player, dates)
+		dates_array = []
+
+		dates.each do |date|
+			split_date = date.split('/')
+			day = split_date[0].to_i
+			month = split_date[1].to_i
+			current_date = Date.new(2014, month, day)
+
+			tweets = player.tweets.where(:date => current_date)
+
+			if tweets.length >= 3
+				dates_array << date
+			end	
+		end
+
+		dates_array
+	end
+
 	def self.tweets_percentage(player, dates)
 		percentages = []
 
@@ -10,7 +29,7 @@ class PlayerTweets
 
 			tweets = player.tweets.where(:date => current_date)
 
-			if tweets.present?
+			if tweets.length >= 3
 				positive = tweets.where(:positive => true).count
 				percentages << (positive * 100) / tweets.count
 			end	

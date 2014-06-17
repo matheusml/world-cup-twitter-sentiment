@@ -22,13 +22,13 @@ class TweetProcesser
     processed_tweet.gsub!('.', '')
     processed_tweet.gsub!(',', '')
     processed_tweet.gsub!('"', '')
+    processed_tweet.gsub!('!', '')
+
     processed_tweet.downcase!
 
     self.entities.each do |ent|
 	    if processed_tweet.include? ent.downcase
 	    	processed_tweet.gsub!(ent.downcase + ' ', 'searchstring ')
-	    	processed_tweet.gsub!(ent.downcase + '?', 'searchstring ?')
-	    	processed_tweet.gsub!(ent.downcase + '!', 'searchstring !')
 	    end
     end
 

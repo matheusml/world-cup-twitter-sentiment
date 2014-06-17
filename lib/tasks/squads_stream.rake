@@ -82,7 +82,7 @@ def do_stream(track, file_path, client, latch)
 		  client.stop
 		  latch.count_down
 	  else
-	  	if status.iso_language_code == 'pt' && !status.text.include?('http') && TweetProcesser.keep_tweet?(status.text, track)
+	  	if status.iso_language_code == 'pt' && !status.text.include?('http') && !status.text.include?('?') && TweetProcesser.keep_tweet?(status.text, track)
       	count += 1
       	tweets << { :id => count, :text => TweetProcesser.preprocess(status.text), :date => Date.today }
     		tweets_text[count] = status.text

@@ -12,6 +12,6 @@ class SentimentClassifier
 	def self.squads_classifier
 		classifier = SubjectivityClassifier.new
 		classifier.makeClassificationJson("selecao-subjetividade-NB.model",
-			"selecao-polaridade-SVM.model", "entrada.json", "saida.json");
+			"selecao-polaridade-NB.model", "entrada.json", "saida.json");
 	end
 end

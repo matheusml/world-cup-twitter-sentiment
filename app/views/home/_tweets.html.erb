@@ -6,7 +6,8 @@
     <% end %>
   	<% tweets.each do |tweet| %>
       <tr>
-      	<td><span class="label <%= positive_or_negative_class(tweet.positive) %>"><%= positive_or_negative_text(tweet.positive) %></span> <b><%= tweet.date.strftime("%d/%m/%Y") %></b> - <%= tweet.text %></td>
+        <% date = tweet.created_at - 3.hours %>
+      	<td><span class="label <%= positive_or_negative_class(tweet.positive) %>"><%= positive_or_negative_text(tweet.positive) %></span> <b><%= date.strftime("%d/%m/%Y - %H:%M") %></b> - <%= tweet.text %></td>
       </tr>
     <% end %>
   </tbody>

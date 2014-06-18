@@ -35,6 +35,14 @@ class TweetProcesser
     processed_tweet
 	end
 
+	def self.keep_tweet?(text)
+		!text.include?('http') && !text.include?('?') && 
+		#!text.include?('não') && !text.include?(' nao ') && 
+		#!text.include?('nunca') && !text.include?('ninguem') &&
+		#!text.include?('ninguém') && !text.include?('nada') &&
+		text.length <= 100 
+	end
+
 	def self.entities_contained_in_tweets(entities, text)
 		entities_array = []
 		entities.each do |entity|
@@ -44,7 +52,7 @@ class TweetProcesser
 		entities_array
 	end
 
-	def self.keep_tweet?(text, entities)
+	def self.tweet_contains_world_cup_related_words?(text, entities)
 		entities.each do |entity|
 			self.world_cup_related_strings.each do |word|
 				if text.downcase.include?(entity.downcase + " " + word.downcase)
@@ -69,7 +77,10 @@ class TweetProcesser
 
 	def self.world_cup_related_strings
 		%W{
+			nao
+			não
 			nunca
+			jamais
 			surpreendeu
 			é
 			foi
@@ -78,7 +89,6 @@ class TweetProcesser
 			perdeu
 			ganhou
 			jogou
-			não
 			empatou
 			arrebentou
 			mandou

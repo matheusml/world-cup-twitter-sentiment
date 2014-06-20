@@ -3,17 +3,19 @@
 class TweetProcesser
 	def self.preprocess(text)
 		username_regex = /@([a-z0-9_]+)/i
-		url_regex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
+		hashtag_regex = /#([a-z0-9_]+)/i
 
 		tweet_array = text.split(" ")
     processed_tweet = String.new
     tweet_array.each do |token|
       if self.stop_words.include?(token.downcase)
-        processed_tweet += "stopword "
+        processed_tweet += " "
+      elsif token.include?('RT')
+        processed_tweet += " "	  
       elsif username_regex.match(token)
-        processed_tweet += "username "
-      elsif url_regex.match(token)
-        processed_tweet += "url "
+        processed_tweet += " "
+      elsif hashtag_regex.match(token)
+        processed_tweet += " "
       else
         processed_tweet += "#{token} "
       end
@@ -32,14 +34,18 @@ class TweetProcesser
 	    end
     end
 
-    processed_tweet
+    self.remove_latin_caracteres(processed_tweet)
 	end
+
+	def self.remove_latin_caracteres(text)
+		text.gsub('ç','c').gsub('ã','a').gsub('à','a')
+			  .gsub('á','a').gsub('í','i').gsub('ú','u')
+			  .gsub('õ','o').gsub('ò','o').gsub('ó','o')
+			  .gsub('ẽ','e').gsub('è','e').gsub('é','e')  		  	
+  end
 
 	def self.keep_tweet?(text)
 		!text.include?('http') && !text.include?('?') && 
-		#!text.include?('não') && !text.include?(' nao ') && 
-		#!text.include?('nunca') && !text.include?('ninguem') &&
-		#!text.include?('ninguém') && !text.include?('nada') &&
 		text.length <= 85 
 	end
 

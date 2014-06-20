@@ -40,7 +40,7 @@ class TweetProcesser
 		#!text.include?('não') && !text.include?(' nao ') && 
 		#!text.include?('nunca') && !text.include?('ninguem') &&
 		#!text.include?('ninguém') && !text.include?('nada') &&
-		text.length <= 100 
+		text.length <= 85 
 	end
 
 	def self.entities_contained_in_tweets(entities, text)

@@ -10,7 +10,7 @@ class TweetProcesser
     tweet_array.each do |token|
       if self.stop_words.include?(token.downcase)
         processed_tweet += " "
-      elsif token.include?('RT')
+      elsif token == 'RT'
         processed_tweet += " "	  
       elsif username_regex.match(token)
         processed_tweet += " "
@@ -21,20 +21,17 @@ class TweetProcesser
       end
     end
 
-    processed_tweet.gsub!('.', '')
-    processed_tweet.gsub!(',', '')
-    processed_tweet.gsub!('"', '')
-    processed_tweet.gsub!('!', '')
+    processed_tweet = self.remove_latin_caracteres(processed_tweet.downcase)
 
-    processed_tweet.downcase!
+    processed_tweet.gsub!(/[^a-z]/, ' ')
 
     self.entities.each do |ent|
 	    if processed_tweet.include? ent.downcase
-	    	processed_tweet.gsub!(ent.downcase + ' ', 'searchstring ')
+	    	processed_tweet.gsub!(ent.downcase + ' ', '')
 	    end
     end
 
-    self.remove_latin_caracteres(processed_tweet)
+    processed_tweet
 	end
 
 	def self.remove_latin_caracteres(text)
@@ -45,8 +42,7 @@ class TweetProcesser
   end
 
 	def self.keep_tweet?(text)
-		!text.include?('http') && !text.include?('?') && 
-		text.length <= 85 
+		!text.include?('http') && !text.include?('?') && text.length <= 85 
 	end
 
 	def self.entities_contained_in_tweets(entities, text)

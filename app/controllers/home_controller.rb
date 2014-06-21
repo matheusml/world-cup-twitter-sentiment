@@ -11,7 +11,7 @@ class HomeController < ApplicationController
 		negative_tweets = @active_squad.tweets.where("date >= ? AND positive = ?", Date.today, false).order('confidence DESC').limit(10)
 		negative_tweets = negative_tweets.uniq_by {|i| i.text}
 
-		@tweets = ( positive_tweets + negative_tweets ).sort_by{|x| x.confidence}.reverse.first(10)
+		@tweets = ( positive_tweets + negative_tweets ).sort_by{|x| x.date}.reverse.first(10)
 
 		@players = @active_squad.players.sort_by{|s| s.name}
 
@@ -32,7 +32,7 @@ class HomeController < ApplicationController
 		negative_tweets = @player.tweets.where("date >= ? AND positive = ?", Date.today, false).order('confidence DESC').limit(10)
 		negative_tweets = negative_tweets.uniq_by {|i| i.text}
 
-		@tweets = ( positive_tweets + negative_tweets ).sort_by{|x| x.confidence}.reverse.first(10)
+		@tweets = ( positive_tweets + negative_tweets ).sort_by{|x| x.date}.reverse.first(10)
 		
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.options[:xAxis][:categories] = PlayerTweets.dates(@player, world_cup_dates)

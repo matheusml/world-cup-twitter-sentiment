@@ -10,7 +10,7 @@ class PlayerTweets
 
 			tweets = player.tweets.where(:date => current_date)
 
-			if tweets.length >= 10
+			if tweets.length >= 5
 				dates_array << date
 			end	
 		end
@@ -29,7 +29,7 @@ class PlayerTweets
 
 			tweets = player.tweets.where(:date => current_date)
 
-			if tweets.length >= 10
+			if tweets.length >= 5
 				positive = tweets.where(:positive => true).count
 				percentages << (positive * 100) / tweets.count
 			end	

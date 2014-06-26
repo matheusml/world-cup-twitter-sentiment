@@ -65,8 +65,8 @@ def save_tweet(entities, tweet, text)
 end
 
 def keep_tweet(tweet)
-	tweet["polarity_confidence"] &&	tweet["polarity_confidence"] > 0.7  &&
-  tweet["subjectivity_confidence"] && tweet["subjectivity_confidence"] > 0.95
+	tweet["polarity_confidence"] &&	tweet["polarity_confidence"] > 0.6  &&
+  tweet["subjectivity_confidence"] && tweet["subjectivity_confidence"] > 0.8
 end
 
 def do_stream(track, file_path, client, latch)

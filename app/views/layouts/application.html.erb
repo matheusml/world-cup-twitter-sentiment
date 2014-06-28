@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <%= analytics_init if Rails.env.production? %>
   <title>OLE UFF</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
@@ -14,8 +15,11 @@
     	<a class="brand" href="/">OLE UFF</a>
     	<ul class="nav">
         <li><%= link_to 'Sobre', about_path %></li>
-        <li><%= link_to 'Contato' %></li>
+        <li><%= link_to 'Contato', contact_path %></li>
     	</ul>
+      <ul class="nav pull-right">
+        <li class="active"><%= link_to 'Limitações e Desafios', limitations_path, :class => 'brand' %></li>
+      </ul>
   	</div>
   </div>
 </div>

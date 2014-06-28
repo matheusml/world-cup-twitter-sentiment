@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140524164357) do
+ActiveRecord::Schema.define(version: 20140614195124) do
 
   create_table "players", force: true do |t|
     t.string   "name"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20140524164357) do
     t.datetime "updated_at"
     t.datetime "date"
     t.float    "confidence"
+    t.float    "subjectivity_confidence"
   end
 
 end

@@ -2,12 +2,13 @@
 	<%= high_chart("chart", @chart) %>
   <tbody>
 		<% if tweets.present? %>  
-			<h3>Tweets de hoje:</h3>
+			<h3>Tweets recentes:</h3>
     <% end %>
   	<% tweets.each do |tweet| %>
-    <tr>
-      	<td><span class="label <%= positive_or_negative_class(tweet.positive) %>"><%= positive_or_negative_text(tweet.positive) %></span> <b><%= tweet.date.strftime("%d/%m/%Y as %I:%M") %></b> - <%= tweet.text %></td>
-    </tr>
+      <tr>
+        <% date = tweet.created_at - 3.hours %>
+      	<td><span class="label <%= positive_or_negative_class(tweet.positive) %>"><%= positive_or_negative_text(tweet.positive) %></span> <b><%= date.strftime("%d/%m/%Y - %H:%M") %></b> - <%= tweet.text %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>

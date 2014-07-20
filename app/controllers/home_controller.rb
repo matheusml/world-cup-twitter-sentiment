@@ -5,10 +5,10 @@ class HomeController < ApplicationController
 		@squads = Squad.all.sort_by{|s| s.name}
 		@active_squad = params[:squad_id] ? Squad.find(params[:squad_id]) : Squad.where(:name => 'Brasil').first
 
-		positive_tweets = @active_squad.tweets.where("date >= ? AND positive = ?", Date.today, true).order('confidence DESC').limit(10)
+		positive_tweets = @active_squad.tweets.where("date >= ? AND positive = ?", Date.new(2014, 7, 13), true).order('confidence DESC').limit(10)
 		positive_tweets = positive_tweets.uniq_by {|i| i.text}
 
-		negative_tweets = @active_squad.tweets.where("date >= ? AND positive = ?", Date.today, false).order('confidence DESC').limit(10)
+		negative_tweets = @active_squad.tweets.where("date >= ? AND positive = ?", Date.new(2014, 7, 13), false).order('confidence DESC').limit(10)
 		negative_tweets = negative_tweets.uniq_by {|i| i.text}
 
 		@tweets = ( positive_tweets + negative_tweets ).sort_by{|x| x.created_at}.reverse.first(10)
@@ -26,10 +26,10 @@ class HomeController < ApplicationController
 	def show_tweets
 		@player = Player.find params[:player_id]
 
-		positive_tweets = @player.tweets.where("date >= ? AND positive = ?", Date.today, true).order('confidence DESC').limit(10)
+		positive_tweets = @player.tweets.where("date >= ? AND positive = ?", Date.new(2014, 7, 13), true).order('confidence DESC').limit(10)
 		positive_tweets = positive_tweets.uniq_by {|i| i.text}
 
-		negative_tweets = @player.tweets.where("date >= ? AND positive = ?", Date.today, false).order('confidence DESC').limit(10)
+		negative_tweets = @player.tweets.where("date >= ? AND positive = ?", Date.new(2014, 7, 13), false).order('confidence DESC').limit(10)
 		negative_tweets = negative_tweets.uniq_by {|i| i.text}
 
 		@tweets = ( positive_tweets + negative_tweets ).sort_by{|x| x.created_at}.reverse.first(10)

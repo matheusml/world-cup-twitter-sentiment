@@ -1,16 +1,20 @@
 <table class="table">
 	<%= high_chart("chart", @chart) %>
   <tbody>
-		<% if tweets.length >= 5 %>  
-			<h3>Tweets recentes:</h3>
-    	<% tweets.each do |tweet| %>
-        <% unless tweet.text.include?('RT ') %>
-          <tr>
-            <% date = tweet.created_at - 3.hours %>
-          	<td><span class="label <%= positive_or_negative_class(tweet.positive) %>"><%= positive_or_negative_text(tweet.positive) %></span> <b><%= date.strftime("%d/%m/%Y - %H:%M") %></b> - <%= tweet.text %></td>
-          </tr>
-        <% end %>
-      <% end %>
-    <% end %>
+    <tr>
+      <td><span class="label label-important">Negativo</span> <b>13/07/2014 - 11:03</b> - @avidasemcolher na verdade o brasil perdeu pq foi roubado mesmo</td>
+    </tr>
+    <tr>
+      <td><span class="label label-important">Negativo</span> <b>13/07/2014 - 00:06</b> - #Brasil foi bem ruim e perdeu então =/</td>
+    </tr>
+    <tr>
+      <td><span class="label label-important">Negativo</span> <b>13/07/2014 - 00:06</b> - Hoje o brasil perdeu meus queridos</td>
+    </tr>
+    <tr>
+      <td><span class="label label-success">Positivo</span> <b>13/07/2014 - 00:06</b> - O BRASIL VAI FAZER TRÊS GOLS AGORA</td>
+    </tr>
+    <tr>
+      <td><span class="label label-success">Positivo</span> <b>13/07/2014 - 00:06</b> - mas o brasil vai ganhar!</td>
+    </tr>
   </tbody>
 </table>
